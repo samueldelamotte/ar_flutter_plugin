@@ -108,6 +108,14 @@ internal class AndroidARView(
                                 result.error("Error", "could not get anchor pose", null)
                             }
                         }
+                         "getCameraGeospatialPose" -> {
+                            val anchorNode = arSceneView.scene.findByName(call.argument("anchorId")) as AnchorNode?
+                            if (anchorNode != null) {
+                                result.success(serializePose(anchorNode.anchor!!.pose))
+                            } else {
+                                result.error("Error", "could not get anchor pose", null)
+                            }
+                        }
                         "getCameraPose" -> {
                             val cameraPose = arSceneView.arFrame?.camera?.displayOrientedPose
                             if (cameraPose != null) {
