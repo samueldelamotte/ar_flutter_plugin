@@ -47,6 +47,17 @@ class ARSessionManager {
     }
   }
 
+  /// Returns the camera pose in Matrix4 format with respect to the world coordinate system of the [ARView]
+  Future<Matrix4?> getCameraGeospatialPose() async {
+    try {
+      final serializedCameraPose = await _channel.invokeMethod<List<dynamic>>('getCameraGeospatialPose', {});
+      return MatrixConverter().fromJson(serializedCameraPose!);
+    } catch (e) {
+      print('Error caught: ' + e.toString());
+      return null;
+    }
+  }
+
   /// Returns the given anchor pose in Matrix4 format with respect to the world coordinate system of the [ARView]
   Future<Matrix4?> getPose(ARAnchor anchor) async {
     try {
